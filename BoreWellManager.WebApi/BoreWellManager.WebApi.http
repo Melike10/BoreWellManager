@@ -1,0 +1,6 @@
+@BoreWellManager.WebApi_HostAddress = http://localhost:5180
+
+GET {{BoreWellManager.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
