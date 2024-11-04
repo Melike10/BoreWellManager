@@ -177,7 +177,7 @@ Kuyulara ait verilerde herkes tarafından görüntülenebilirken , ekleme, silme
 ### 5. Documents
 ![Documents](https://github.com/Melike10/BoreWellManager/blob/25e854deb52161fff44e007b7196669c9f93e48e/Documents.png)
 
-GetByWellId enpointine kullanıcılardan isresponsible true olan kullanıcının bakmasına izin verilmiştir. Oluşturma, silme ve değişiklik kısımlarına yine sadece employee kullanıcısı yapabilmektedir.
+GetByWellId enpointine kullanıcılardan isresponsible true olan kullanıcının bakmasına izin verilmiştir. Oluşturma, silme ve değişiklik kısımlarına yine sadece employee kullanıcısı yapabilmektedir.Dökümanlar resmi kurumlara gideceği için sonradan toptan bir değişiklik yapılmaması istenmiştir o yüzden put işlemi yoktur.
 
 ### 6. Payments
 ![Payment](https://github.com/Melike10/BoreWellManager/blob/25e854deb52161fff44e007b7196669c9f93e48e/Payments.png)
