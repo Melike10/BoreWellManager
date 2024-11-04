@@ -122,9 +122,9 @@ Aşağıdaki API işlemleri sağlanmaktadır:
 - **FeeReceived**: Ücretin alınıp alınmadığını belirtir.
 - **CreatedBy**: Belgeyi oluşturan kullanıcı.
 - **ModifiedBy**: Belgeyi güncelleyen kullanıcı.
-- 
+ 
 #### Dipnot
-**Payments** ve **Documents** tabloları arasında birebir ilişki vardır. Her **Document** kaydı oluşturulduğunda, ilgili bir **Payment** kaydı da oluşturulmaktadır. Benzer şekilde, bir **Document** kaydı silindiğinde, ona ait **Payment** kaydı da otomatik olarak silinmektedir. Olurda **Payment** bilgisinde bir hata olmuşsa ve silinmek istenirse tekrar oluşturulması endpoint ile sağlanmıştır.
+**Payments** ve **Documents** tabloları arasında birebir ilişki vardır. Her **Document** kaydı oluşturulduğunda, ilgili bir **Payment** kaydı da oluşturulmaktadır. Benzer şekilde, bir **Document** kaydı silindiğinde, ona ait **Payment** kaydı da otomatik olarak silinmektedir.
 
 ### 6. Payment
 
@@ -166,23 +166,25 @@ Tc veya id bilgisine sahip her kişi kullanıcı bilgilerini görebilirken tüm 
 ### 3. Lands
 ![Lands](https://github.com/Melike10/BoreWellManager/blob/25e854deb52161fff44e007b7196669c9f93e48e/Lands.png)
 
-Bu endpoint'de de get kısmı tüm kullanıclara açıktır. Fakat post,put,delete ve patch kısımları sadece employee rolündeki kişi tarafından yapılabilir. Ayrıca Put kısmında ayrıca bir timefilter yazılmıştır.
+Bu endpoint'de de get kısmı tüm kullanıcılara açıktır. Fakat post,put,delete ve patch kısımları sadece employee rolündeki kişi tarafından yapılabilir. Ayrıca Put kısmında ayrıca bir timefilter validasyonu yapılmıştır.
 
 
 ### 4. Wells
 ![Wells](https://github.com/Melike10/BoreWellManager/blob/25e854deb52161fff44e007b7196669c9f93e48e/Wells.png)
 
-Kuyulara ait verilerde herkes ttarafından görüntülenebilirken , ekleme, silme ve değiştirme işlemleri sadece employee rolüne ait kullanıcıdadır.
+Kuyulara ait verilerde herkes tarafından görüntülenebilirken , ekleme, silme ve değiştirme işlemleri sadece employee rolüne ait kullanıcıdadır.
 
 ### 5. Documents
 ![Documents](https://github.com/Melike10/BoreWellManager/blob/25e854deb52161fff44e007b7196669c9f93e48e/Documents.png)
 
-Dokümanlar için oluşturulan enpoint'e ek olarak GetByWellId enpointine kullanıcılardan isresponsible true olan kullanıcının bakmasına izin verilmiştir.
+GetByWellId enpointine kullanıcılardan isresponsible true olan kullanıcının bakmasına izin verilmiştir. Oluşturma, silme ve değişiklik kısımlarına yine sadece employee kullanıcısı yapabilmektedir.
 
 ### 6. Payments
 ![Payment](https://github.com/Melike10/BoreWellManager/blob/25e854deb52161fff44e007b7196669c9f93e48e/Payments.png)
 
-Ödemeler tablosunda da GetByName kısmına Isresponsible filtresi eklenmiştir.
+Ödemeler tablosunda da GetByName kısmına Isresponsible filtresi eklenmiştir.Oluşturma, silme ve değişiklik kısımlarına yine sadece employee kullanıcısı yapabilmektedir.
 
 ### 7. Institutions
 ![Institutions](https://github.com/Melike10/BoreWellManager/blob/25e854deb52161fff44e007b7196669c9f93e48e/Institutions.png)
+
+Oluşturma, silme ve değişiklik kısımlarına yine sadece employee kullanıcısı yapabilmektedir.
