@@ -59,7 +59,7 @@ Aşağıdaki API işlemleri sağlanmaktadır:
 - **Name**: Kullanıcının adı.
 - **Phone**: Kullanıcının telefon numarası.
 - **Address**: Kullanıcının adresi.
-- **UserType**: Kullanıcının tipi (örneğin, Admin, User).
+- **UserType**: Kullanıcının tipi (örneğin, Employee,Owner,Tenant).
 - **IsResponsible**: Kullanıcının sorumluluğu olup olmadığını belirtir. (bir arazinin birden fazla sahibi olabilir ama kuyu biri adına açılabilir o yüzden bu sorumluluğu alan kişi bununla belirlenmiş oldu.)
 - **CreateDate**: Kullanıcının oluşturulma tarihi.
 - **ModifiedDate**: Kullanıcının son güncellenme tarihi.
