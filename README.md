@@ -2,11 +2,11 @@
 
 # BoreWellManager
 
-Bu proje,Patika Dev+ final ödevidir ve  su kuyuları açan bir firmanın arazi, sahip, belgeler ve ödeme gibi varlıklarını yönetmek amacıyla geliştirilmiş çok katmanlı bir Web API uygulamasıdır. BoreWellManager projesi, özellikle arazilerin sahiplerini, kiracıları ve şirket çalışanlarını yönetir. Aynı zamanda kimlik doğrulama ve yetkilendirme işlemleriyle kullanıcı yönetimini sağlar.
+Bu proje,Patika Dev+ final ödevidir ve  su kuyuları açan bir firmanın arazi, kullanıcılar, belgeler ve ödeme gibi varlıklarını yönetmek amacıyla geliştirilmiş çok katmanlı bir Web API uygulamasıdır. BoreWellManager projesi, özellikle arazilerin sahiplerini, kiracıları ve şirket çalışanlarını yönetir. Aynı zamanda kimlik doğrulama ve yetkilendirme işlemleriyle kullanıcı yönetimini sağlar.
 
 ## Proje Özeti
 
-**BoreWellManager**, su kuyuları açan bir firma için geliştirilmiş çok katmanlı bir web API uygulamasıdır. Bu API ile araziler, sahipleri ve kiracıları gibi birçok veriyi yönetebilir ve kullanıcılara farklı yetkilendirme seçenekleri sunabiliriz. Proje, kimlik doğrulama ve yetkilendirme için JWT (JSON Web Token) kullanarak güvenli bir erişim sağlar. Ayrıca, Entity Framework ile veri yönetimi ve çeşitli middleware katmanlarıyla kapsamlı bir backend mimarisi sağlar.
+**BoreWellManager**, su kuyuları açan bir firma için geliştirilmiş çok katmanlı bir web API uygulamasıdır. Bu API ile araziler, sahipleri ve kiracıları gibi birçok veriyi yönetebilir ve kullanıcılara farklı yetkilendirme seçenekleri sunabiliriz. Proje, kimlik doğrulama ve yetkilendirme için JWT (JSON Web Token) kullanarak güvenli bir erişim sağlar. Ayrıca, Entity Framework ile veri yönetimi ve  middleware katmanıyla kapsamlı bir backend mimarisi sağlar.
 
 ### Kullanılan Teknolojiler ve Araçlar
 
@@ -43,7 +43,7 @@ Aşağıdaki API işlemleri sağlanmaktadır:
 
 - **Kimlik Doğrulama (Authentication)**: Kullanıcılar JWT token ile doğrulanır.
 - **Yetkilendirme (Authorization)**: Her kullanıcı rolüne göre yetkilendirme işlemleri yapılır.
-- **Kullanıcı Yönetimi**: ASP.NET Core Identity veya özel bir kullanıcı yönetimi kullanılarak gerçekleştirilmiştir.
+- **Kullanıcı Yönetimi**: ASP.NET Core Custom Identitiy yönetimi kullanılarak gerçekleştirilmiştir.
 
 ## Tablolar ve İlişkileri
 ![tables-relation](https://github.com/Melike10/BoreWellManager/blob/25e854deb52161fff44e007b7196669c9f93e48e/diagram3.png)
