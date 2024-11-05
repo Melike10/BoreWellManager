@@ -127,27 +127,51 @@ namespace BoreWellManager.Business.Operations.Land
         }
 
         public async Task<ServiceMessage> DeleteLand(int id)
-        {
-            var land =  _repository.GetById(id);
-            if (land is null)
-            { return new ServiceMessage {
-                IsSucceed = false,
-                Message = "Silinmek istenen arazi bulunamadı"
-            }; 
-            }
-            _repository.DeleteById(id);
-            try
-            {
-                await _unitOfWork.SaveChangesAsync();
-            }
-            catch (Exception)
-            {
+ {
+     // Retrieve the land by ID
+     var land = _repository.GetById(id);
+     if (land is null)
+     {
+         return new ServiceMessage
+         {
+             IsSucceed = false,
+             Message = "Silinmek istenen arazi bulunamadı"
+         };
+     }
+     var landOWners = _ownersRepository.GetAll(x => x.LandId == land.Id).ToList();
+     await _unitOfWork.BeginTransaction();
 
-                throw new Exception("Kayıt silinirken bir hata oluştu.");
-            }
-            return new ServiceMessage { IsSucceed= true };
+     try
+     {
+         // Delete associated LandOwners first
+        
+         foreach (var landowner in landOWners)
+         {
+             _ownersRepository.Delete(landowner);
+         }
 
-        }
+         // Delete the Land entity
+         _repository.DeleteById(id);
+
+         // Save all changes and commit the transaction
+         await _unitOfWork.SaveChangesAsync();
+         await _unitOfWork.CommitTransaction();
+
+         return new ServiceMessage { IsSucceed = true };
+     }
+     catch (Exception ex)
+     {
+         // Rollback the transaction if any error occurs
+         await _unitOfWork.RollBackTransaction();
+
+         // Log detailed error for diagnosis
+         Console.WriteLine($"Error deleting land with ID {id}: {ex.Message}");
+         Console.WriteLine(ex.StackTrace);
+
+         // Re-throw or handle the exception as needed
+         throw new Exception("Kayıt silinirken bir hata oluştu: " + ex.Message);
+     }
+ }
 
         public async Task<LandDto> GetLand(int id)
         {
