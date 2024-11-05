@@ -1,4 +1,4 @@
-﻿using BoreWellManager.Business.Operations.Payment.Dtos;
+using BoreWellManager.Business.Operations.Payment.Dtos;
 using BoreWellManager.Business.Types;
 using BoreWellManager.Data.Entitites;
 using BoreWellManager.Data.Repository;
@@ -124,44 +124,56 @@ namespace BoreWellManager.Business.Operations.Payment
 
         public async Task<ServiceMessage> Delete(int id)
         {
-            var payment = _paymentRepository.GetById(id);
-            var doc = await _documentRepository.GetAll(x => x.PaymentId == payment.Id).FirstOrDefaultAsync();
+            var payment =  _paymentRepository.GetById(id);
             if (payment is null)
             {
                 return new ServiceMessage { IsSucceed = false, Message = "Silinecek kayıt bulunamadı" };
             }
 
+            // İlgili dökümanı getir
+            var doc = await _documentRepository.GetAll(x => x.PaymentId == payment.Id).FirstOrDefaultAsync();
+
             await _unitOfWork.BeginTransaction();
+
+            // Ödeme kaydını sil
             _paymentRepository.Delete(payment);
+
             try
             {
-                _unitOfWork.SaveChangesAsync();
+                await _unitOfWork.SaveChangesAsync(); // Ödeme kaydını silme işlemini tamamla
             }
             catch (Exception)
             {
-
                 await _unitOfWork.RollBackTransaction();
-                throw new Exception("Belge silinemedi");
+                throw new Exception("Ödeme kaydı silinemedi");
             }
-            doc.PaymentId = null;
-            _documentRepository.Update(doc);
-            try
-            {
-                _unitOfWork.SaveChangesAsync();
-                _unitOfWork.CommitTransaction();
-            }
-            catch (Exception)
-            {
 
-                await _unitOfWork.RollBackTransaction();
-                throw new Exception("Belge silinemedi");
+            // Döküman kaydındaki PaymentId'yi NULL yap
+            if (doc != null)
+            {
+                doc.PaymentId = null;
+                _documentRepository.Update(doc);
+
+                try
+                {
+                    await _unitOfWork.SaveChangesAsync(); // Döküman kaydını güncelle
+                }
+                catch (Exception)
+                {
+                    await _unitOfWork.RollBackTransaction();
+                    throw new Exception("Döküman kaydı güncellenemedi");
+                }
             }
+
+            // Transaction'ı başarıyla sonlandır
+            await _unitOfWork.CommitTransaction();
+
             return new ServiceMessage
             {
                 IsSucceed = true
             };
-
         }
+
 
         public async Task<List<PaymentEntity>> GetAllPayments()
         {
