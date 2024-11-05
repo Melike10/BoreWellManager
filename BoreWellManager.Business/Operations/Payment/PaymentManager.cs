@@ -49,7 +49,7 @@ namespace BoreWellManager.Business.Operations.Payment
                 LastPaymentDate = dto.LastPaymentDate
             };
 
-            _paymentRepository.Add(payment);
+            _paymentRepository.Add(paymentEntitiy);
             try
             {
                 await _unitOfWork.SaveChangesAsync();
@@ -60,9 +60,9 @@ namespace BoreWellManager.Business.Operations.Payment
                 throw new Exception("Ödeme bilgileri kaydedilirken hata oluştu");
             }
 
-            doc.PaymentId = payment.Id;
-            doc.FeeReceived = payment.RemaningAmount == 0 ? true : false;
-            doc.ModifiedBy = payment.EmployeeWhoReceivedPayment;
+            doc.PaymentId = paymentEntitiy.Id;
+            doc.FeeReceived = paymentEntitiy.RemaningAmount == 0 ? true : false;
+            doc.ModifiedBy = paymentEntitiy.EmployeeWhoReceivedPayment;
             _documentRepository.Update(doc);
             try
             {
@@ -76,7 +76,7 @@ namespace BoreWellManager.Business.Operations.Payment
                 throw new Exception("Ödeme bilgilerinin belgeleri güncellenirken hata oluştu");
             }
 
-            return new ServiceMessage<PaymentEntity> { IsSucceed = true, Data = payment };
+            return new ServiceMessage<PaymentEntity> { IsSucceed = true, Data = paymentEntitiy };
         }
 
         public async Task<ServiceMessage<PaymentEntity>> ChangePaymentFee(ChangePaymentDto changePaymentDto)
@@ -136,7 +136,7 @@ namespace BoreWellManager.Business.Operations.Payment
             await _unitOfWork.BeginTransaction();
 
             // Ödeme kaydını sil
-            _paymentRepository.Delete(payment);
+            _paymentRepository.Delete(payment,false);
 
             try
             {
