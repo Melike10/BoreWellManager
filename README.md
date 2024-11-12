@@ -1,190 +1,185 @@
-
-
 # BoreWellManager
 
-Bu proje,Patika Dev+ final ödevidir ve  su kuyuları açan bir firmanın arazi, kullanıcılar, belgeler ve ödeme gibi varlıklarını yönetmek amacıyla geliştirilmiş çok katmanlı bir Web API uygulamasıdır. BoreWellManager projesi, özellikle arazilerin sahiplerini, kiracıları ve şirket çalışanlarını yönetir. Aynı zamanda kimlik doğrulama ve yetkilendirme işlemleriyle kullanıcı yönetimini sağlar.
+This project, created as part of the Patika Dev+ final assignment, is a multi-layered Web API application developed for a company that drills borewells. The **BoreWellManager** API manages entities like land, users, documents, and payments, specifically focusing on managing landowners, tenants, and company employees, with added features for authentication and authorization.
 
-## Proje Özeti
+## Project Overview
 
-**BoreWellManager**, su kuyuları açan bir firma için geliştirilmiş çok katmanlı bir web API uygulamasıdır. Bu API ile araziler, sahipleri ve kiracıları gibi birçok veriyi yönetebilir ve kullanıcılara farklı yetkilendirme seçenekleri sunabiliriz. Proje, kimlik doğrulama ve yetkilendirme için JWT (JSON Web Token) kullanarak güvenli bir erişim sağlar. Ayrıca, Entity Framework ile veri yönetimi ve  middleware katmanıyla kapsamlı bir backend mimarisi sağlar.
+**BoreWellManager** is a multi-layered web API solution designed for a borewell drilling company. This API enables the management of various data such as landowners and tenants, while offering users role-based authorization. JWT (JSON Web Token) authentication provides secure access, while Entity Framework and middleware layers deliver a robust backend architecture.
 
-### Kullanılan Teknolojiler ve Araçlar
+### Technologies and Tools Used
 
-- **ASP.NET Core Web API** - Web API geliştirme
-- **Entity Framework Core (Code First)** - Veri erişim katmanı ve veritabanı yönetimi
-- **JWT (JSON Web Token)** - Kimlik doğrulama ve yetkilendirme
-- **ASP.NET Core Identity veya Custom Kullanıcı Yönetimi** - Kullanıcı yönetimi
-- **Repository Pattern** - Veri işlemleri için
-- **Unit of Work** - Veri işlemleri yönetimi
-- **Dependency Injection (DI)** - Bağımlılık yönetimi
-- **Middleware** - Özel ara yazılımlar
-- **Action Filters** - Özel işlemler için
-- **Model Validation** - Veri doğrulama işlemleri
+- **ASP.NET Core Web API** - For building Web APIs
+- **Entity Framework Core (Code First)** - Database management
+- **JWT (JSON Web Token)** - For authentication and authorization
+- **ASP.NET Core Identity or Custom User Management** - For user management
+- **Repository Pattern** - For data handling
+- **Unit of Work** - Manages data transactions
+- **Dependency Injection (DI)** - Dependency management
+- **Middleware** - Custom middlewares
+- **Action Filters** - For additional processing
+- **Model Validation** - To ensure data integrity
 
-## Proje Mimarisi
+## Project Architecture
 
-Proje, 3 ana katmandan oluşmaktadır:
+This project is structured into three primary layers:
 
-1. **Business Katmanı**: İş kurallarının ve operasyonların yönetildiği katman. Her bir `Controller` için ilgili `Service` (örneğin, `ILandService`), gerekli CRUD operasyonlarını `Task` şeklinde tanımlar.
-2. **Data Katmanı**: Entity tanımları, enumlar, repository ve unit of work yapıları bu katmanda bulunur. Ayrıca migration işlemleri burada gerçekleştirilir.
-3. **Web API Katmanı**: API endpoint işlemlerinin tanımlandığı katman. Bu katman üzerinden kullanıcılar ile sistemin etkileşimi sağlanır.
+1. **Business Layer**: Manages business rules and operations. Each `Controller` has an associated `Service` (e.g., `ILandService`), which defines CRUD operations as asynchronous `Task` methods.
+2. **Data Layer**: Contains entity definitions, enums, repository, and unit of work patterns. Migrations are also executed in this layer.
+3. **Web API Layer**: Defines API endpoints, allowing user interaction with the system.
 
-## API Özellikleri
+## API Features
 
-Aşağıdaki API işlemleri sağlanmaktadır:
+The following API operations are supported:
 
-- **GET**: Kayıtları listeleme ve detay görüntüleme
-- **POST**: Yeni kayıt ekleme
-- **PUT**: Mevcut kayıtları güncelleme
-- **PATCH**: Kısmi güncelleme işlemi
-- **DELETE**: Kayıtları silme
+- **GET**: Retrieve and view records
+- **POST**: Add new records
+- **PUT**: Update existing records
+- **PATCH**: Partially update records
+- **DELETE**: Remove records
 
-### Kimlik Doğrulama ve Yetkilendirme
+### Authentication and Authorization
 
-- **Kimlik Doğrulama (Authentication)**: Kullanıcılar JWT token ile doğrulanır.
-- **Yetkilendirme (Authorization)**: Her kullanıcı rolüne göre yetkilendirme işlemleri yapılır.
-- **Kullanıcı Yönetimi**: ASP.NET Core Custom Identitiy yönetimi kullanılarak gerçekleştirilmiştir.
+- **Authentication**: Users are authenticated using JWT tokens.
+- **Authorization**: Access is role-based, granting specific privileges to different user roles.
+- **User Management**: Implemented using ASP.NET Core Identity or Custom User Management.
 
-## Tablolar ve İlişkileri
+## Database Tables and Relationships
+
 ![tables-relation](https://github.com/Melike10/BoreWellManager/blob/25e854deb52161fff44e007b7196669c9f93e48e/diagram3.png)
-
-
 
 ### 1. Users
 
-**Users** tablosu, sistemdeki kullanıcı bilgilerini saklar.
+The **Users** table stores user information.
 
-- **Id**: Her kullanıcıya ait benzersiz kimlik (Primary Key).
-- **TC**: Kullanıcının TC kimlik numarası.
-- **Name**: Kullanıcının adı.
-- **Phone**: Kullanıcının telefon numarası.
-- **Address**: Kullanıcının adresi.
-- **UserType**: Kullanıcının tipi (örneğin, Employee,Owner,Tenant).
-- **IsResponsible**: Kullanıcının sorumluluğu olup olmadığını belirtir. (bir arazinin birden fazla sahibi olabilir ama kuyu biri adına açılabilir o yüzden bu sorumluluğu alan kişi bununla belirlenmiş oldu.)
-- **CreateDate**: Kullanıcının oluşturulma tarihi.
-- **ModifiedDate**: Kullanıcının son güncellenme tarihi.
-- **IsDeleted**: Kullanıcının silinip silinmediğini belirtir.
+- **Id**: Unique identifier (Primary Key).
+- **TC**: User's ID number.
+- **Name**: User's name.
+- **Phone**: User's phone number.
+- **Address**: User's address.
+- **UserType**: User role (e.g., Employee, Owner, Tenant).
+- **IsResponsible**: Indicates if the user has a responsibility.
+- **CreateDate**: Date of creation.
+- **ModifiedDate**: Last updated date.
+- **IsDeleted**: Indicates if the user is deleted.
 
 ### 2. Land
 
-**Land** tablosu, arazi bilgilerini saklar.
+The **Land** table holds information about the land.
 
-- **Id**: Her araziye ait benzersiz kimlik (Primary Key).
-- **City**: Arazi şehir bilgisi (zorunlu alan).
-- **Town**: Arazi kasaba bilgisi (zorunlu alan).
-- **Street**: Arazi mahalle bilgisi.
-- **Block**: Arazi ada bilgisi (zorunlu alan).
-- **Plot**: Arazi parsel bilgisi (zorunlu alan).
-- **Location**: Arazi mevki bilgisi.
-- **LandType**: Arazi tipi (zorunlu alan).
-- **HasLien**: Arazi üzerinde şerh, irtifak veya beyan olup olmadığını belirtir.
-- **IsCksRequired**: ÇKS gerekliliğini belirtir.
-- **LienType**: Şerh tipi.
-- **LandOwners**: İlişkili arazi sahipleri (LandOwnersEntity ile çoka çok ilişkilidir).
-- **Wells**: İlişkili kuyu bilgileri (WellEntity ile bire çok ilişkilidir ).
+- **Id**: Unique identifier (Primary Key).
+- **City**: City where the land is located.
+- **Town**: Town where the land is located.
+- **Street**: Neighborhood of the land.
+- **Block**: Block number.
+- **Plot**: Plot number.
+- **Location**: Specific location.
+- **LandType**: Type of land.
+- **HasLien**: Indicates if there is a lien on the land.
+- **IsCksRequired**: Indicates if CKS is required.
+- **LienType**: Type of lien.
+- **LandOwners**: Associated landowners (many-to-many relation with LandOwnersEntity).
+- **Wells**: Associated wells (one-to-many relation with WellEntity).
 
 ### 3. LandOwners
 
-**LandOwners** tablosu, arazilerin sahiplerini saklar.
+The **LandOwners** table stores landowners' information.
 
-- **LandId**: İlgili arazi ID'si (Foreign Key).
-- **UserId**: Arazi sahibinin kullanıcı ID'si (Foreign Key).
+- **LandId**: Associated land ID (Foreign Key).
+- **UserId**: Landowner's user ID (Foreign Key).
 
 ### 4. Well
 
-**Well** tablosu, kuyularla ilgili bilgileri saklar.
+The **Well** table contains well information.
 
-- **Id**: Her kuyuya ait benzersiz kimlik (Primary Key).
-- **UserId**: Kuyunun sahibi olan kullanıcı ID'si (Foreign Key).
-- **LandId**: Kuyunun bulunduğu arazi ID'si (Foreign Key).
-- **XCordinat**: X koordinatı (sayılara ve boşluklara izin veren validasyon).
-- **YCordinat**: Y koordinatı (sayılara ve boşluklara izin veren validasyon).
-- **Debi**: Kuyunun debisi.
-- **StaticLevel**: Kuyunun statik seviyesi.
-- **DynamicLevel**: Kuyunun dinamik seviyesi.
-- **Documents**: İlişkili belgeler (DocumentEntity ile bire çok ilişkilidir).
+- **Id**: Unique identifier (Primary Key).
+- **UserId**: User ID of the well owner (Foreign Key).
+- **LandId**: Land ID where the well is located (Foreign Key).
+- **XCordinat**: X-coordinate of the well.
+- **YCordinat**: Y-coordinate of the well.
+- **Debi**: Flow rate of the well.
+- **StaticLevel**: Static level.
+- **DynamicLevel**: Dynamic level.
+- **Documents**: Associated documents (one-to-many relation with DocumentEntity).
 
 ### 5. Document
 
-**Document** tablosu, belgeleri saklar.
+The **Document** table stores document details.
 
-- **Id**: Her belgeye ait benzersiz kimlik (Primary Key).
-- **WellId**: İlgili kuyu ID'si (Foreign Key).
-- **PaymentId**: İlgili ödeme ID'si (Foreign Key).
-- **InstitutionId**: İlgili kurum ID'si (Foreign Key).
-- **Type**: Belge tipi.
-- **CustomerSubmissionDate**: Müşteri gönderim tarihi.
-- **InstitutionSubmissionDate**: Kuruma gönderim tarihi.
-- **SignaturesReceived**: İmzaların durumu (örneğin, "Received", "Email Sent", "Not Received").
-- **DeliveredToInstitution**: Belgenin kuruma teslim edilip edilmediğini belirtir.
-- **IsLienCertificate**: Belgenin şerh belgesi olup olmadığını belirtir.
-- **DocumentFee**: Belge ücreti.
-- **FeeReceived**: Ücretin alınıp alınmadığını belirtir.
-- **CreatedBy**: Belgeyi oluşturan kullanıcı.
-- **ModifiedBy**: Belgeyi güncelleyen kullanıcı.
- 
-#### Dipnot
-**Payments** ve **Documents** tabloları arasında birebir ilişki vardır. Her **Document** kaydı oluşturulduğunda, ilgili bir **Payment** kaydı da oluşturulmaktadır. Benzer şekilde, bir **Document** kaydı silindiğinde, ona ait **Payment** kaydı da otomatik olarak silinmektedir.
+- **Id**: Unique identifier (Primary Key).
+- **WellId**: Related well ID (Foreign Key).
+- **PaymentId**: Related payment ID (Foreign Key).
+- **InstitutionId**: Related institution ID (Foreign Key).
+- **Type**: Type of document.
+- **CustomerSubmissionDate**: Customer submission date.
+- **InstitutionSubmissionDate**: Submission date to institution.
+- **SignaturesReceived**: Status of signatures.
+- **DeliveredToInstitution**: Indicates if delivered to institution.
+- **IsLienCertificate**: Indicates if the document is a lien certificate.
+- **DocumentFee**: Fee for the document.
+- **FeeReceived**: Indicates if fee is received.
+- **CreatedBy**: User who created the document.
+- **ModifiedBy**: User who last modified the document.
 
 ### 6. Payment
 
-**Payment** tablosu, ödemeleri saklar.
+The **Payment** table holds payment details.
 
-- **Id**: Her ödemeye ait benzersiz kimlik (Primary Key).
-- **DocumentId**: İlgili belge ID'si (Foreign Key).
-- **DepositorFullName**: Ödemeyi yapan kişinin tam adı.
-- **PaymentDate**: Ödeme tarihi.
-- **TotalAmount**: Toplam ödeme miktarı.
-- **RemaningAmount**: Kalan ödeme miktarı.
-- **EmployeeWhoReceivedPayment**: Ödemeyi alan çalışan.
-- **IsInstallmentPayment**: Taksitli ödeme olup olmadığını belirtir.
-- **InstallmentAmount**: Taksitli ödemelerdeki taksit tutarı (nullable).
-- **LastPaymentDate**: Son ödeme tarihi (nullable).
+- **Id**: Unique identifier (Primary Key).
+- **DocumentId**: Related document ID (Foreign Key).
+- **DepositorFullName**: Full name of the depositor.
+- **PaymentDate**: Date of payment.
+- **TotalAmount**: Total payment amount.
+- **RemaningAmount**: Remaining payment amount.
+- **EmployeeWhoReceivedPayment**: Employee who received the payment.
+- **IsInstallmentPayment**: Indicates if it is an installment payment.
+- **InstallmentAmount**: Amount per installment.
+- **LastPaymentDate**: Date of the last payment.
 
 ### 7. Institution
 
-**Institution** tablosu, kurum bilgilerini saklar.
+The **Institution** table stores institution details.
 
-- **Id**: Her kuruma ait benzersiz kimlik (Primary Key).
-- **Name**: Kurumun adı (zorunlu alan).
-- **City**: Kurumun bulunduğu şehir.
-- **Town**: Kurumun bulunduğu kasaba.
-- **Documents**: Bu kuruma ait belgelerin listesi (DocumentEntity ile bire çok ilişkilidir).
+- **Id**: Unique identifier (Primary Key).
+- **Name**: Name of the institution.
+- **City**: City of the institution.
+- **Town**: Town of the institution.
+- **Documents**: Documents related to the institution.
 
-## EndPoints
+## Endpoints
+
 ### 1. Auth
 ![Auth](https://github.com/Melike10/BoreWellManager/blob/25e854deb52161fff44e007b7196669c9f93e48e/auth.png)
 
-Kullanıcılar sisteme register ile kayıt olurlar.Kullanıcılar, sisteme kayıt olduktan sonra giriş yaparak token bilgisi alabilirler. Sadece kullanıcı tipi employee olan veya  IsResponsible özelliği true olan  kullanıcılar belirli endpoint'lere erişim sağlayabilir.
+Users can register in the system through `register`. Only `Employee` or `IsResponsible` users have access to certain endpoints.
 
 ### 2. Users
 ![Users](https://github.com/Melike10/BoreWellManager/blob/25e854deb52161fff44e007b7196669c9f93e48e/Users.png)
 
-Tc veya id bilgisine sahip her kişi kullanıcı bilgilerini görebilirken tüm kullanıcıları ve adres değişikliği ile IsResponsible değişikliğini sadece employee tipindeki kullanıcı yapabilir.
-
+Each user can view their information by providing their ID or TC. Only users of type `Employee` can view all users.
 
 ### 3. Lands
 ![Lands](https://github.com/Melike10/BoreWellManager/blob/25e854deb52161fff44e007b7196669c9f93e48e/Lands.png)
 
-Bu endpoint'de de get kısmı tüm kullanıcılara açıktır. Fakat post,put,delete ve patch kısımları sadece employee rolündeki kişi tarafından yapılabilir. Ayrıca Put kısmında ayrıca bir timefilter validasyonu yapılmıştır.
-
+- **Land Information**: Each user can access land information, filtering based on location or land type. Employees with **IsResponsible** status can view and manage all lands in the system.
 
 ### 4. Wells
 ![Wells](https://github.com/Melike10/BoreWellManager/blob/25e854deb52161fff44e007b7196669c9f93e48e/Wells.png)
 
-Kuyulara ait verilerde herkes tarafından görüntülenebilirken , ekleme, silme ve değiştirme işlemleri sadece employee rolüne ait kullanıcıdadır.
+- **Well Information**: Users can retrieve details about wells on their associated lands. Employees with **IsResponsible** status have full access to all well records.
 
 ### 5. Documents
 ![Documents](https://github.com/Melike10/BoreWellManager/blob/25e854deb52161fff44e007b7196669c9f93e48e/Documents.png)
 
-GetByWellId enpointine kullanıcılardan isresponsible true olan kullanıcının bakmasına izin verilmiştir. Oluşturma, silme ve değişiklik kısımlarına yine sadece employee kullanıcısı yapabilmektedir.Dökümanlar resmi kurumlara gideceği için sonradan toptan bir değişiklik yapılmaması istenmiştir o yüzden put işlemi yoktur.
+- **Document Management**: Users can upload and view documents related to their lands or wells. Document status can be tracked, including customer submission date, institution submission date, and signature status. Fees and lien certificates can also be managed within this section.
 
 ### 6. Payments
-![Payment](https://github.com/Melike10/BoreWellManager/blob/25e854deb52161fff44e007b7196669c9f93e48e/Payments.png)
+![Payments](https://github.com/Melike10/BoreWellManager/blob/25e854deb52161fff44e007b7196669c9f93e48e/Payments.png)
 
-Ödemeler tablosunda da GetByName kısmına Isresponsible filtresi eklenmiştir.Oluşturma, silme ve değişiklik kısımlarına yine sadece employee kullanıcısı yapabilmektedir.
+- **Payment Tracking**: Users can record and track payments associated with documents. This includes installment payments, remaining balance, and last payment date. Employees who are **IsResponsible** can view all payment records.
 
 ### 7. Institutions
 ![Institutions](https://github.com/Melike10/BoreWellManager/blob/25e854deb52161fff44e007b7196669c9f93e48e/Institutions.png)
 
-Oluşturma, silme ve değişiklik kısımlarına yine sadece employee kullanıcısı yapabilmektedir.
+- **Institution Information**: Users can access information about institutions involved with their land and well documents. This section includes details on institution name, city, and town, along with related documents.
+
+
