@@ -1,4 +1,4 @@
-# BoreWellManager
+# Bore Well Manager Multi Layers Web Api
 
 This project, created as part of the Patika Dev+ final assignment, is a multi-layered Web API application developed for a company that drills borewells. The **BoreWellManager** API manages entities like land, users, documents, and payments, specifically focusing on managing landowners, tenants, and company employees, with added features for authentication and authorization.
 
